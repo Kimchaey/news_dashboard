@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>오늘의 뉴스 대시보드</title>
+    <p class="date-display" id="currentDate"></p> <!-- 날짜 표시 -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Spoqa+Han+Sans+Neo:wght@300;400;500;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- 상단 컨트롤 영역 -->
+    <header class="header">
+        <h1 class="title">오늘의 뉴스 대시보드</h1>
+        <p class="sub-heading">세상의 흐름을 한눈에 &bull;&bull;&bull; 클릭 한 번으로 타임라인을 생성해보세요!</p>
+
+        <div class="search-and-button">
+            <!-- 검색 바 -->
+            <div class="search">
+                <form id="searchForm">
+                    <input type="text" id="searchInput" name="search" placeholder="  관심 있는 사건을 검색하세요 (ex. 트럼프 당선)" aria-label="검색어 입력">
+                    <button type="submit">
+                        <i></i>
+                    </button>
+                </form>
+            </div>
+        
+            <!-- NOTD 생성 버튼 -->
+            <button id="startButton" class="btn-secondary">NOTD</button>
+        </div>
+        <div class="overlay hidden"></div>
+
+        <p id="statusMessage" class="status-message"></p>
+    </header>
+
+    <!-- 대시보드 컨테이너 -->
+    <div class="dashboard hidden">
+        <div class="loading-overlay" id="loadingOverlay">
+        </div>
+        <!-- 왼쪽 뉴스 임베드 영역 -->
+        <div class="news-embed">
+            <div class="news-frame-container"></div>
+            <div class="news-summary"></div>
+        </div>
+
+        <!-- 오른쪽 분석 결과 -->
+        <div class="content-area">
+            <!-- 상단: Combined Plot -->
+            <div class="content-top">
+                <div class="content-top-left">
+                    <img src="" alt="Combined Plot" class="combined-plot hidden">
+                </div>
+                <div class="content-top-right">
+                    <div class="info-box">
+                        <p id="dynamicText"></p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 하단: 타임라인 -->
+            <div class="content-bottom">
+                <div class="timeline">
+                    <!-- 타임라인 요소가 동적으로 추가됨 -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- JavaScript 파일 포함 -->
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>

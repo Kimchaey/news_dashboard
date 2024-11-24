@@ -1,0 +1,395 @@
+/* 전체 페이지 스타일 */
+body {
+    font-family: 'Spoqa Han Sans Neo', Arial, sans-serif;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 0;
+    background-color: #f4f4f9;
+}
+
+/* 상단 컨트롤 영역 */
+.header {
+    text-align: center;
+    margin-top: 20px;
+}
+
+.sub-heading {
+    font-size: 30px; 
+    font-family: 'FreesentationBold', Arial, sans-serif; 
+    color: black; /* 텍스트 색상 */
+    margin-top: 30px;
+    text-align: center; 
+}
+
+.title {
+    font-size: 45px; /* 폰트 크기 */
+    font-family: 'SF함박눈', Arial, sans-serif;
+    color: #333; /* 텍스트 색상 */
+    margin: 0;
+    text-align: center;
+    position: relative; /* ::after를 위한 설정 */
+}
+
+.title::after {
+    content: ""; 
+    display: block;
+    width: 130%; 
+    height: 4px; 
+    background-color: #757373; 
+    margin: 10px auto 0; /* 위쪽 여백 10px, 가운데 정렬 */
+    position: relative; /* 위치 조정 */
+    left: 50%; /* 왼쪽 기준으로 50% 이동 */
+    transform: translateX(-50%); 
+}
+
+.header .status-message {
+    font-size: 16px;
+    color: #555;
+    margin-top: 10px;
+    font-family: 'Spoqa Han Sans Neo', Arial, sans-serif;/* 폰트 적용 */
+}
+
+/* 날짜 표시 스타일 */
+.date-display {
+    font-size: 20px;
+    font-family: 'SF함박눈', Arial, sans-serif; 
+    color: #555; 
+    position: absolute; /* 위치를 절대값으로 지정 */
+    top: 4.5%; /* 제목과 수직 정렬 */
+    transform: translateY(-50%); 
+    right: 130px; 
+    text-align: right; /* 텍스트를 오른쪽 정렬 */
+}
+
+
+@font-face {
+    font-family: 'SF함박눈'; /* 폰트 이름 */
+    src: url('/static/fonts/SF함박눈TTF.ttf') format('truetype'); /* 폰트 경로 */
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'FreesentationBold'; /* 사용자 정의 폰트 이름 */
+    src: url('/static/fonts/Freesentation-7Bold.ttf') format('truetype'); /* 폰트 경로 */
+    font-weight: bold;
+    font-style: normal;
+}
+
+/* 검색창과 버튼을 묶는 컨테이너 */
+.search-and-button {
+    display: flex; /* 검색창과 버튼을 나란히 배치 */
+    align-items: center; /* 검색창과 버튼의 수직 정렬 */
+    justify-content: center; /* 전체를 중앙 정렬 */
+    gap: 20px; /* 검색창과 버튼 사이의 간격 */
+    margin-top: -20px; /* 검색창과 버튼 컨테이너의 상단 여백 */
+}
+
+/* 검색 바 스타일 */
+.search {
+    position: relative;
+    z-index: 10;
+    margin-top: 20px;
+    display: flex;
+    justify-content: center; /* 중앙 정렬 */
+}
+
+.search form {
+    display: flex;
+    align-items: center;
+    width: 800px; /* 고정된 너비 */
+    max-width: none; /* 최대 너비 제한 해제 */
+    margin: 0 auto; /* 중앙 정렬 */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); /* 그림자를 form 전체에 적용 */
+    border-radius: 15px; /* 전체적인 둥근 모서리 */
+}
+
+.search input {
+    flex: 1; /* 버튼을 제외한 나머지 공간을 차지 */
+    height: 40px;
+    border: none;
+    outline: none;
+    padding: 0 10px;
+    background-color: #fff;
+    font-size: 16px;
+    color: #333;
+    border-radius: 15px 0 0 15px; /* 입력창만 왼쪽 모서리 둥글게 */
+}
+
+.search button {
+    width: 40px;
+    height: 40px;
+    border: none;
+    background-color: grey;
+    border-radius: 0 15px 15px 0; /* 버튼만 오른쪽 모서리 둥글게 */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.search button i {
+    width: 20px;
+    height: 20px;
+    border: 2px solid white;
+    border-radius: 50%;
+    position: relative;
+}
+
+.search button i::after {
+    content: "";
+    width: 2px;
+    height: 10px;
+    background: white;
+    position: absolute;
+    top: 15.5px;
+    left: 19.5px;
+    transform: rotate(-45deg);
+}
+
+.search.active input {
+    width: 250px;
+    padding: 0 10px;
+}
+
+/* 오버레이 */
+.overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: none;
+}
+
+.overlay.hidden {
+    display: none;
+}
+
+/* 대시보드 가리개 */
+.loading-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(255, 255, 255, 1);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 100; /* 대시보드 위에 표시 */
+    font-size: 20px;
+    color: #333; /* 텍스트 색상 */
+    font-family: 'Spoqa Han Sans Neo', Arial, sans-serif; /* 폰트 적용 */
+    font-weight: bold;
+    border-radius: 8px; /* 대시보드 모서리와 동일 */
+}
+
+/* 가리개 숨김 상태 */
+.hidden-overlay {
+    display: none;
+}
+
+
+/* 대시보드 생성 버튼 스타일 */
+.btn-secondary {
+    display: block; 
+    margin: 20px auto 0; 
+    padding: 10px 20px;
+    font-size: 16px;
+    background-color: rgb(206, 146, 34);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); /* 그림자 추가 */
+    color: white;
+    border: none;
+    border-radius: 15px;
+    cursor: pointer;
+    font-family: 'Spoqa Han Sans Neo', Arial, sans-serif; 
+}
+
+.btn-secondary:hover {
+    background-color: #888;
+    transform: translateY(-0.5px); /* 약간 위로 올라가는 효과 */
+    transition: box-shadow 0.3s ease, transform 0.3s ease; /* 부드러운 전환 효과 */
+}
+
+.btn-secondary:active {
+    background-color: #888; /* 클릭 시 회색으로 변경 */
+    transition: background-color 0.2s ease; /* 부드러운 전환 효과 */
+}
+
+
+/* 대시보드 컨테이너 */
+.dashboard {
+    width: 90%;
+    height: 90vh;
+    display: flex;
+    position: relative;
+    background-color: #f9f9f9;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    border-radius: 8px;
+    overflow: hidden;
+    margin-top: 50px;
+    margin-bottom: 50px;
+    border: 1px solid #ddd; /* 대시보드 경계선 */
+}
+
+/* 대시보드 왼쪽 뉴스 임베드 및 요약 영역 */
+.news-embed {
+    width: 33%; /* 대시보드 왼쪽 1/3 */
+    height: 100%; /* 대시보드 전체 높이 */
+    display: flex;
+    flex-direction: column;
+    box-sizing: border-box;
+    padding: 10px;
+    background-color: #f9f9f9; /* 배경색 */
+}
+
+
+/* 뉴스 임베드 프레임 */
+.news-frame-container {
+    width: 100%;
+    height: 82%; /* 세로 크기 4/5 */
+    margin-bottom: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: linear-gradient(135deg, #f9f9f9, #f9f9f9); /* 부드러운 배경 그라데이션 */
+}
+
+.news-frame {
+    width: 100%; /* 프레임 내부 여백 */
+    height: 100%; /* 부모 컨테이너 크기에 맞춤 */
+    border: none;
+    border-radius: 8px; /* 둥근 모서리 */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* 프레임 그림자 */
+}
+
+
+/* 뉴스 요약 */
+.news-summary {
+    width: 100%;
+    height: 17%; /* 세로 크기 1/5 */
+    padding: 10px;
+    font-size: 14px;
+    color: #333;
+    overflow-y: auto; /* 스크롤 가능 */
+    box-sizing: border-box;
+    text-align: left;
+    background-color: #ffffff; /* 흰색 배경 */
+    border-top: 1px solid #ddd; /* 상단 구분선 */
+    border-radius: 8px; /* 둥근 모서리 */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* 약간의 그림자 */
+    font-family: 'Spoqa Han Sans Neo', Arial, sans-serif; /* 폰트 적용 */
+}
+
+.news-summary p {
+    margin: 5px 0;
+    font-family: 'Spoqa Han Sans Neo', Arial, sans-serif; /* 폰트 적용 */
+}
+
+/* 오른쪽 컨텐츠 영역 */
+.content-area {
+    width: 67%; /* 대시보드 오른쪽 2/3 */
+    display: flex;
+    flex-direction: column;
+    box-sizing: border-box;
+}
+
+/* 오른쪽 상단 구역 레이아웃 */
+.content-top {
+    width: 100%;
+    height: 30%; /* 위쪽 30% */
+    display: flex; /* 플렉스 컨테이너 */
+    box-sizing: border-box;
+    padding: 10px;
+    background-color: #f9f9f9; /* 배경색 */
+}
+
+/* 상단 왼쪽 구역 (이미지 영역) */
+.content-top-left {
+    width: 50%; /* 상단의 왼쪽 절반 */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Combined Plot 이미지 */
+.combined-plot {
+    width: 85%; /* 이미지 크기를 조절 */
+    height: auto; /* 비율 유지 */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* 그림자 효과 */
+    border-radius: 8px; /* 둥근 모서리 */
+}
+
+/* 상단 오른쪽 구역 (추가 콘텐츠 영역) */
+.content-top-right {
+    width: 50%; /* 상단의 오른쪽 절반 */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* 오른쪽 텍스트박스 */
+.content-top-right .info-box {
+    width: 92%; /* 텍스트박스 크기 */
+    padding: 5px;
+    height: 90%;
+    background-color: #ffffff; /* 흰색 배경 */
+    border-radius: 8px; /* 둥근 모서리 */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* 그림자 효과 */
+    font-size: 14px;
+    color: #333; /* 진한 회색 텍스트 */
+    font-family: 'Spoqa Han Sans Neo', Arial, sans-serif; /* 폰트 적용 */
+    line-height: 1.6; /* 줄 간격 */
+    text-align: left; /* 왼쪽 정렬 */
+}
+
+
+
+/* 오른쪽 하단 영역 */
+.content-bottom {
+    width: 100%;
+    height: 70%; /* 아래쪽 70% */
+    background-color: #f9f9f9; /* 하단 콘텐츠 배경 */
+    box-sizing: border-box;
+    padding: 20px;
+}
+
+/* 타임라인 스타일 */
+.timeline {
+    display: flex;
+    flex-direction: column;
+    gap: 20px; /* 타임라인 요소 간격 */
+    padding: 10px;
+    background-color: #ffffff; /* 흰색 배경 */
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* 그림자 효과 */
+    overflow-y: auto;
+    max-height: 100%; /* 부모 컨테이너 높이에 맞춤 */
+}
+
+.timeline-item {
+    display: flex;
+    flex-direction: column;
+    padding: 10px;
+    border-left: 4px solid #007bff; /* 파란색 선 */
+    background-color: #f9f9f9;
+    border-radius: 4px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* 약간의 그림자 */
+}
+
+.timeline-date {
+    font-weight: bold;
+    color: #555;
+    margin-bottom: 5px;
+}
+
+.timeline-summary {
+    color: #333;
+    line-height: 1.4;
+    font-size: 14px;
+}
+
