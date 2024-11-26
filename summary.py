@@ -3,6 +3,7 @@ import pandas as pd
 from transformers import BartForConditionalGeneration, PreTrainedTokenizerFast
 import nltk
 from nltk.tokenize import sent_tokenize
+from datetime import datetime, timedelta
 
 # NLTK punkt tokenizer 다운로드
 nltk.download('punkt')
@@ -15,9 +16,11 @@ model = BartForConditionalGeneration.from_pretrained(model_path)
 tokenizer = PreTrainedTokenizerFast.from_pretrained(model_path)
 
 # 요약 함수 정의 (길이 초과 시 분할 요약)
-def summarize_text_with_chunks(text, max_chunk_length=1024, summary_max_length=512):
+def summarize_text_with_chunks(text, max_chunk_length=1024, summary_max_length=512, max_time=120):
     if not isinstance(text, str) or len(text.strip()) == 0:
-        return "요약할 내용이 없습니다."
+        return None  # 요약할 내용이 없으면 Null 값 반환
+    
+    start_time = datetime.now()
     
     try:
         input_ids = tokenizer.encode(text, return_tensors="pt")
@@ -32,6 +35,10 @@ def summarize_text_with_chunks(text, max_chunk_length=1024, summary_max_length=5
         chunk_summaries = []
 
         for sentence in sentences:
+            # 시간 초과 체크
+            if (datetime.now() - start_time).total_seconds() > max_time:
+                return None  # 시간 초과로 Null 값 반환
+
             tentative_chunk = current_chunk + " " + sentence
             input_ids = tokenizer.encode(tentative_chunk, return_tensors="pt")
             
@@ -64,7 +71,7 @@ def summarize_text_with_chunks(text, max_chunk_length=1024, summary_max_length=5
         return tokenizer.decode(final_summary_ids[0], skip_special_tokens=True)
 
     except Exception as e:
-        return f"Error: {e}"
+        return None  # 에러 발생 시 Null 값 반환
 
 # 요약 작업 수행 함수
 def summarize_and_save(input_csv_path):
@@ -91,11 +98,17 @@ def summarize_and_save(input_csv_path):
         for idx, content in enumerate(data['content']):
             print(f"기사 {idx + 1}/{total_articles} 요약 중...")
             summary = summarize_text_with_chunks(content)
+            if summary is None:
+                print(f"기사 {idx + 1} 요약 시간 초과 또는 오류로 건너뜀.")
+            else:
+                print(f"기사 {idx + 1}/{total_articles} 요약 완료.")
             summaries.append(summary)
-            print(f"기사 {idx + 1}/{total_articles} 요약 완료.")
 
         # 요약 결과를 데이터프레임에 추가
         data['Summary'] = summaries
+
+        # Null 값(요약 실패) 행 삭제
+        data = data.dropna(subset=['Summary'])
 
         # 결과를 CSV 파일로 저장
         print(f"\n요약된 데이터를 저장 중입니다: {output_csv_path}")
@@ -104,9 +117,12 @@ def summarize_and_save(input_csv_path):
         print(f"요약된 데이터가 {output_csv_path} 파일로 저장되었습니다.")
 
         # 최신 기사의 요약 추출
-        data['date'] = pd.to_datetime(data['date'])
-        latest_article = data.sort_values(by='date', ascending=False).iloc[0]
-        latest_summary = latest_article['Summary']
+        if not data.empty:
+            data['date'] = pd.to_datetime(data['date'])
+            latest_article = data.sort_values(by='date', ascending=False).iloc[0]
+            latest_summary = latest_article['Summary']
+        else:
+            latest_summary = None
 
         return output_csv_path, latest_summary  # 요약 파일 경로와 최신 기사의 요약 반환
 
