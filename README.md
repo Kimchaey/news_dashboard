@@ -1,6 +1,7 @@
 📰 오늘의 사건룩! : 당일 핵심 뉴스와 사건 흐름을 한눈에 보여주는 대시보드 서비스
 -
-**Team : NOTD (News Of The Day)**
+Team : **NOTD (News Of The Day)**
+
 경희대학교 데이터분석/AI 동아리 쿠다 6기에서 진행하한 Data Business 트랙 심화 프로젝트
 
 
