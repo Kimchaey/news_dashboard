@@ -1,5 +1,5 @@
 📰 오늘의 사건룩! : 당일 핵심 뉴스와 사건 흐름을 한눈에 보여주는 대시보드 서비스
-=
+-
 경희대학교 데이터분석/AI 동아리 쿠다 6기에서 진행하는 Data Business 트랙 심화 프로젝트
 
 
@@ -36,8 +36,10 @@
 사건을 다루는 **기사 분포와 사건의 촉발 지점**을 한눈에 보여줌으로써 전체적인 사건의 볼륨을 보여줌
 
 
+
 4️⃣ 시연 영상
 -
+
 [![시연 영상](https://img.youtube.com/vi/Qd4cR0NQnpI/0.jpg)](https://www.youtube.com/watch?v=Qd4cR0NQnpI)
 
 
@@ -51,17 +53,17 @@
       <a href="https://github.com/Kimchaey">김채영</a>
     </td>
     <td align="center">
-      <img src="https://github.githubassets.com/images/icons/emoji/alien.png" width="100">
+      <img src="https://github.githubassets.com/images/icons/emoji/sunflower.png" width="100">
       <br>
       <a href="https://github.com/Leselie01">최예지</a>
     </td>
     <td align="center">
-      <img src="https://github.githubassets.com/images/icons/emoji/mountain.png" width="100">
+      <img src="https://github.githubassets.com/images/icons/emoji/alien.png" width="100">
       <br>
       <a href="https://github.com/snstkfka123">장하늘</a>
     </td>
     <td align="center">
-      <img src="https://github.githubassets.com/images/icons/emoji/tree.png" width="100">
+      <img src="https://github.githubassets.com/images/icons/emoji/rocket.png" width="100">
       <br>
       <a href="https://github.com/staream">김정운</a>
     </td>
